@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-sql-server
+spec:
+  selector:
+    app: ms-sql-server
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-sql-server
+spec:
+  selector:
+    matchLabels:
+      app: ms-sql-server
+  template:
+    metadata:
+      labels:
+        app: ms-sql-server
+    spec:
+      containers:
+        - name: ms-sql-server
+          image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+          env:
+            - name: ACCEPT_EULA
+              value: "Y"
+            - name: SA_PASSWORD
+              value: "HDLCrin8*"
+            - name: MSSQL_PID
+              value: Express
+          ports:
+            - containerPort: 1433
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: resources-api
+spec:
+  selector:
+    app: resources-api
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resources-api
+spec:
+  selector:
+    matchLabels:
+      app: resources-api
+  template:
+    metadata:
+      labels:
+        app: resources-api
+    spec:
+      containers:
+        - name: resources-api
+          image: jcortizs/dotnet_resources_api
+          env:
+            - name: ms-sql-server
+              value: "ms-sql-server"
+          ports:
+            - containerPort: 80
