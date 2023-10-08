@@ -21,42 +21,43 @@ namespace ResourcesAPI.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };*/
 
-        //private readonly ILogger<FilesController> _logger;
+        private readonly ILogger<FilesController> _logger;
         private readonly ResourcesContext _context;
 
         private readonly IWebHostEnvironment _env;
-        public FilesController(ResourcesContext context, IWebHostEnvironment env)
+        public FilesController(ResourcesContext context, IWebHostEnvironment env, ILogger<FilesController> logger)
         {
             _context = context;
 
             _env = env;
-        }
-        /*public FilesController(ILogger<FilesController> logger)
-        {
+
             _logger = logger;
-        }*/
+
+        }
 
         [HttpGet("GetAllFiles")]
-        public async Task<ActionResult<IEnumerable<Files>>> GetAllFiles()
+        public async Task<ResourcesResponse<dynamic>> GetAllFiles()
         {
-            return await _context.Files.ToListAsync();
+            List<Files> result = await _context.Files.ToListAsync();
+
+            return new ResourcesResponse<dynamic>(result);
         }
 
         [HttpGet("GetFile/{rowid}")]
-        public async Task<ActionResult<Files>> GetFile(int rowid)
+        public async Task<ResourcesResponse<dynamic>> GetFile(int rowid)
         {
             var file = await _context.Files.FindAsync(rowid);
 
             if (file == null)
             {
-                return NotFound();
+                return new ResourcesResponse<dynamic>(null, "Error", new List<string> { "File not found" });
             }
 
-            return file;
+            return new ResourcesResponse<dynamic>(file);
         }
 
         [HttpGet("GetFilesByClass/{class_id}")]
-        public async Task<dynamic> GetFilesByClass(int class_id)
+        public async Task<ResourcesResponse<dynamic>> GetFilesByClass(int class_id)
         {
             IEnumerable<dynamic> files = await _context.Files
             .Where(x => x.class_id == class_id)
@@ -68,47 +69,11 @@ namespace ResourcesAPI.Controllers
                 file.filedata = await GetFileUrlLocalAsync(file);
             }
 
-            return files.Select(x => new { x.filename, x.filedata });
-        }
-
-        [HttpPut("PutFile/{rowid}")]
-        public async Task<IActionResult> PutFile(int rowid, [FromBody] ResourcesRequest request)
-        {
-            dynamic params_ = JsonConvert.DeserializeObject(request.parameters);
-
-            dynamic data = JsonConvert.DeserializeObject(request.data);
-
-            //int rowid = params_["rowid"];
-
-            if (!FileExists(rowid))
-            {
-                return BadRequest();
-            }
-
-            Files file = _context.Files.FirstOrDefault(x => x.rowid == rowid);
-
-            string filename = data["filename"];
-            //string filedata = data["filedata"];
-            int class_id = data["class_id"];
-            int class_order = data["class_order"];
-            string userid = data["userid"];
-
-            file.filename = filename;
-            //file.filedata = filedata;
-            file.class_id = class_id;
-            file.class_order = class_order;
-
-            //
-            file.createdby = userid;
-            file.createdon = DateTime.Now;
-
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            return new ResourcesResponse<dynamic>(files.Select(x => new { x.filename, x.filedata }));
         }
 
         [HttpPost("PostFile")]
-        public async Task<dynamic> PostFile([FromBody] ResourcesRequest request)
+        public async Task<ResourcesResponse<dynamic>> PostFile([FromBody] ResourcesRequest request)
         {
             /*
             Request Example
@@ -148,23 +113,58 @@ namespace ResourcesAPI.Controllers
 
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFile", new { rowid = file.rowid }, file.filename);
+            return new ResourcesResponse<dynamic>(null, "File created");
         }
 
-        // DELETE: api/YourModels/5
+        [HttpPut("PutFile/{rowid}")]
+        public async Task<ResourcesResponse<dynamic>> PutFile(int rowid, [FromBody] ResourcesRequest request)
+        {
+            dynamic params_ = JsonConvert.DeserializeObject(request.parameters);
+
+            dynamic data = JsonConvert.DeserializeObject(request.data);
+
+            //int rowid = params_["rowid"];
+
+            if (!FileExists(rowid))
+            {
+                return new ResourcesResponse<dynamic>(null, "Error", new List<string> { "BadRequest" });
+            }
+
+            Files file = _context.Files.FirstOrDefault(x => x.rowid == rowid);
+
+            string filename = data["filename"];
+            //string filedata = data["filedata"];
+            int class_id = data["class_id"];
+            int class_order = data["class_order"];
+            string userid = data["userid"];
+
+            file.filename = filename;
+            //file.filedata = filedata;
+            file.class_id = class_id;
+            file.class_order = class_order;
+
+            //
+            file.createdby = userid;
+            file.createdon = DateTime.Now;
+
+            await _context.SaveChangesAsync();
+
+            return new ResourcesResponse<dynamic>(null, "File updated");
+        }
+
         [HttpDelete("DeleteFile/{id}")]
-        public async Task<IActionResult> DeleteFile(int rowid)
+        public async Task<ResourcesResponse<dynamic>> DeleteFile(int rowid)
         {
             var file = await _context.Files.FindAsync(rowid);
             if (file == null)
             {
-                return NotFound();
+                return new ResourcesResponse<dynamic>(null, "Error", new List<string> { "File not found" });
             }
 
             _context.Files.Remove(file);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return new ResourcesResponse<dynamic>(null, "File deleted");
         }
 
         private bool FileExists(int rowid)
@@ -185,7 +185,7 @@ namespace ResourcesAPI.Controllers
             // Get the absolute path of the running app
             string appPath = AppDomain.CurrentDomain.BaseDirectory;
 
-            string folderPath = Path.Combine(appPath,"public/Files");
+            string folderPath = Path.Combine(appPath, "public/Files");
 
             // Check if the folder exists, if not, create it
             if (!Directory.Exists(folderPath))
@@ -204,7 +204,7 @@ namespace ResourcesAPI.Controllers
             await System.IO.File.WriteAllBytesAsync(filePath, bytes);
 
             var host = HttpContext.Request.Host.ToUriComponent();
-            
+
             // Get the absolute path of the Data folder
             string dataPath = Path.Combine(folderPath, file.filename);
 

@@ -2,22 +2,19 @@ using System.Collections.Generic;
 
 namespace ResourcesAPI.Wrappers
 {
-    public class Response<T>
+    public class ResourcesResponse<T>
     {
-        public Response()
+        public ResourcesResponse()
         {
         }
-        public Response(T data, string message = null)
+        public ResourcesResponse(T data, string message = null, List<string> errors = null)
         {
-            Succeeded = true;
+            Succeeded = errors == null ? true : false;
             Message = message;
             Data = data;
+            Errors = errors;
         }
-        public Response(string message)
-        {
-            Succeeded = false;
-            Message = message;
-        }
+
         public bool Succeeded { get; set; }
         public string Message { get; set; }
         public List<string> Errors { get; set; }
