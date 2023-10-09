@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "ResourcesAPI": {
+    "dotnet_resources_api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

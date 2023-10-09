@@ -5,20 +5,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 
-namespace ResourcesAPI.Models
+namespace dotnet_resources_api.Models
 {
-    public partial class ResourcesContext : DbContext
+    public partial class resources_context : DbContext
     {
-        public ResourcesContext()
+        public resources_context()
         {
         }
 
-        public ResourcesContext(DbContextOptions<ResourcesContext> options)
+        public resources_context(DbContextOptions<resources_context> options)
             : base(options)
         {
         }
-        public virtual DbSet<Classes> Classes { get; set; }
-        public virtual DbSet<Files> Files { get; set; }
+        //public virtual DbSet<classes> Classes { get; set; }
+        public virtual DbSet<files> Files { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

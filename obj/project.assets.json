@@ -3455,11 +3455,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jcos1\\Documents\\Universidad\\2do Sem 2023\\Desarrollo de software III\\Proyecto Final\\ResourcesAPI\\ResourcesAPI.csproj",
-      "projectName": "ResourcesAPI",
-      "projectPath": "C:\\Users\\jcos1\\Documents\\Universidad\\2do Sem 2023\\Desarrollo de software III\\Proyecto Final\\ResourcesAPI\\ResourcesAPI.csproj",
+      "projectUniqueName": "C:\\Users\\jcos1\\Documents\\Universidad\\2do Sem 2023\\Desarrollo de software III\\Proyecto Final\\dotnet_resources_api\\dotnet_resources_api.csproj",
+      "projectName": "dotnet_resources_api",
+      "projectPath": "C:\\Users\\jcos1\\Documents\\Universidad\\2do Sem 2023\\Desarrollo de software III\\Proyecto Final\\dotnet_resources_api\\dotnet_resources_api.csproj",
       "packagesPath": "C:\\Users\\jcos1\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jcos1\\Documents\\Universidad\\2do Sem 2023\\Desarrollo de software III\\Proyecto Final\\ResourcesAPI\\obj\\",
+      "outputPath": "C:\\Users\\jcos1\\Documents\\Universidad\\2do Sem 2023\\Desarrollo de software III\\Proyecto Final\\dotnet_resources_api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

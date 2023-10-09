@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "qylHvfBWW7iLds04K7/PrBap5PIAwemg1DAeFEyaRfI=",
-  "Source": "ResourcesAPI",
-  "BasePath": "_content/ResourcesAPI",
+  "Hash": "ObVcUKL6zf0xWmnoZg7BK/zUhNL6Vx2Mjgs8Kr9BE5I=",
+  "Source": "dotnet_resources_api",
+  "BasePath": "_content/dotnet_resources_api",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

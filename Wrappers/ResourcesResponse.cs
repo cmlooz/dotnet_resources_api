@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ResourcesAPI.Wrappers
+namespace dotnet_resources_api.Wrappers
 {
     public class ResourcesResponse<T>
     {

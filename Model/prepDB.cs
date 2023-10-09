@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 
-namespace ResourcesAPI.Models
+namespace dotnet_resources_api.Models
 {
     public static class prepDB
     {
@@ -11,12 +11,12 @@ namespace ResourcesAPI.Models
         {
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
-                seedData(serviceScope.ServiceProvider.GetService<ResourcesContext>());
+                seedData(serviceScope.ServiceProvider.GetService<resources_context>());
             }
 
         }
 
-        public static void seedData(ResourcesContext context)
+        public static void seedData(resources_context context)
         {
             System.Console.WriteLine("Appling Migrations....");
             context.Database.Migrate();

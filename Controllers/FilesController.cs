@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using ResourcesAPI.Models;
-using ResourcesAPI.Wrappers;
+using dotnet_resources_api.Models;
+using dotnet_resources_api.Wrappers;
 
-namespace ResourcesAPI.Controllers
+namespace dotnet_resources_api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -22,10 +22,10 @@ namespace ResourcesAPI.Controllers
         };*/
 
         private readonly ILogger<FilesController> _logger;
-        private readonly ResourcesContext _context;
+        private readonly resources_context _context;
 
         private readonly IWebHostEnvironment _env;
-        public FilesController(ResourcesContext context, IWebHostEnvironment env, ILogger<FilesController> logger)
+        public FilesController(resources_context context, IWebHostEnvironment env, ILogger<FilesController> logger)
         {
             _context = context;
 
@@ -38,7 +38,7 @@ namespace ResourcesAPI.Controllers
         [HttpGet("GetAllFiles")]
         public async Task<ResourcesResponse<dynamic>> GetAllFiles()
         {
-            List<Files> result = await _context.Files.ToListAsync();
+            List<files> result = await _context.Files.ToListAsync();
 
             return new ResourcesResponse<dynamic>(result);
         }
@@ -64,7 +64,7 @@ namespace ResourcesAPI.Controllers
             //.Select(x => new { x.filename, x.filedata })
             .ToListAsync();
 
-            foreach (Files file in files)
+            foreach (files file in files)
             {
                 file.filedata = await GetFileUrlLocalAsync(file);
             }
@@ -99,7 +99,7 @@ namespace ResourcesAPI.Controllers
             if (ExistFileByNameAndUser(filename, createdby))
                 filename = DateTime.Now.ToString("yyyyMMdd_hhmmss") + "_" + filename;
 
-            Files file = new Files
+            files file = new files
             {
                 filename = filename,
                 filedata = filedata,
@@ -130,7 +130,7 @@ namespace ResourcesAPI.Controllers
                 return new ResourcesResponse<dynamic>(null, "Error", new List<string> { "BadRequest" });
             }
 
-            Files file = _context.Files.FirstOrDefault(x => x.rowid == rowid);
+            files file = _context.Files.FirstOrDefault(x => x.rowid == rowid);
 
             string filename = data["filename"];
             //string filedata = data["filedata"];
@@ -177,7 +177,7 @@ namespace ResourcesAPI.Controllers
             return _context.Files.Any(e => e.filename == filename && e.createdby == createdby);
         }
 
-        private async Task<string> GetFileUrlLocalAsync(Files file)
+        private async Task<string> GetFileUrlLocalAsync(files file)
         {
             if (file.filedata.Contains("http"))
                 return file.filedata;

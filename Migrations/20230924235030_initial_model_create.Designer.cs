@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ResourcesAPI.Models;
+using dotnet_resources_api.Models;
 
 #nullable disable
 
-namespace ResourcesAPI.Migrations
+namespace dotnet_resources_api.Migrations
 {
-    [DbContext(typeof(ResourcesContext))]
+    [DbContext(typeof(resources_context))]
     [Migration("20230924235030_initial_model_create")]
     partial class initial_model_create
     {
@@ -25,7 +25,7 @@ namespace ResourcesAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ResourcesAPI.Models.Classes", b =>
+            modelBuilder.Entity("dotnet_resources_api.Models.Classes", b =>
                 {
                     b.Property<int>("rowid")
                         .ValueGeneratedOnAdd()
@@ -55,7 +55,7 @@ namespace ResourcesAPI.Migrations
                     b.ToTable("Classes");
                 });
 
-            modelBuilder.Entity("ResourcesAPI.Models.Files", b =>
+            modelBuilder.Entity("dotnet_resources_api.Models.Files", b =>
                 {
                     b.Property<int>("rowid")
                         .ValueGeneratedOnAdd()

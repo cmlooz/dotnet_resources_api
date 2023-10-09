@@ -40,10 +40,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: resources-api
+  name: dotnet-resources-api
 spec:
   selector:
-    app: resources-api
+    app: dotnet-resources-api
   ports:
     - protocol: TCP
       port: 8080
@@ -53,18 +53,18 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: resources-api
+  name: dotnet-resources-api
 spec:
   selector:
     matchLabels:
-      app: resources-api
+      app: dotnet-resources-api
   template:
     metadata:
       labels:
-        app: resources-api
+        app: dotnet-resources-api
     spec:
       containers:
-        - name: resources-api
+        - name: dotnet-resources-api
           image: jcortizs/dotnet_resources_api
           env:
             - name: ms-sql-server
