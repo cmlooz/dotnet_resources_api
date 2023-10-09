@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ResourcesAPI.Models;
+using dotnet_resources_api.Models;
 
 #nullable disable
 
-namespace ResourcesAPI.Migrations
+namespace dotnet_resources_api.Migrations
 {
-    [DbContext(typeof(ResourcesContext))]
-    partial class ResourcesContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(resources_context))]
+    partial class resources_contextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,7 @@ namespace ResourcesAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ResourcesAPI.Models.Classes", b =>
+            /*modelBuilder.Entity("dotnet_resources_api.Models.classes", b =>
                 {
                     b.Property<int>("rowid")
                         .ValueGeneratedOnAdd()
@@ -51,10 +51,10 @@ namespace ResourcesAPI.Migrations
 
                     b.HasKey("rowid");
 
-                    b.ToTable("Classes");
-                });
+                    b.ToTable("classes");
+                });*/
 
-            modelBuilder.Entity("ResourcesAPI.Models.Files", b =>
+            modelBuilder.Entity("dotnet_resources_api.Models.files", b =>
                 {
                     b.Property<int>("rowid")
                         .ValueGeneratedOnAdd()
@@ -88,7 +88,7 @@ namespace ResourcesAPI.Migrations
 
                     b.HasKey("rowid");
 
-                    b.ToTable("Files");
+                    b.ToTable("files");
                 });
 #pragma warning restore 612, 618
         }

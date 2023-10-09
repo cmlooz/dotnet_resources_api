@@ -6,11 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
-namespace ResourcesAPI.Models
+namespace dotnet_resources_api.Models
 {
-    public partial class Classes
+    public partial class classes
     {
-        [Key]
+        /*[Key]
         public int rowid { get; set; }
 
         [Required]
@@ -31,6 +31,6 @@ namespace ResourcesAPI.Models
 
         [Required]
         [Column(TypeName = "datetime")]
-        public DateTime createdon { get; set; }
+        public DateTime createdon { get; set; }*/
     }
 }

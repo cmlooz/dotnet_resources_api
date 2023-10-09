@@ -10,16 +10,16 @@ EXPOSE 1433
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["ResourcesAPI.csproj", "."]
-RUN dotnet restore "./ResourcesAPI.csproj"
+COPY ["dotnet_resources_api.csproj", "."]
+RUN dotnet restore "./dotnet_resources_api.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet build "ResourcesAPI.csproj" -c Release -o /app/build
+RUN dotnet build "dotnet_resources_api.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "ResourcesAPI.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "dotnet_resources_api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ResourcesAPI.dll", "-p", "80"]
+ENTRYPOINT ["dotnet", "dotnet_resources_api.dll", "-p", "80"]

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
-using ResourcesAPI.Models;
+using dotnet_resources_api.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +15,7 @@ builder.Services.AddSwaggerGen();
 
 
 //Dependency Injection of DbContext Class
-builder.Services.AddDbContext<ResourcesContext>(options =>
+builder.Services.AddDbContext<resources_context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 

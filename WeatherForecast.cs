@@ -1,4 +1,4 @@
-namespace ResourcesAPI
+namespace dotnet_resources_api
 {
     public class WeatherForecast
     {

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ResourcesAPI.Migrations
+namespace dotnet_resources_api.Migrations
 {
     /// <inheritdoc />
     public partial class initial_model_create : Migration
@@ -14,8 +14,8 @@ namespace ResourcesAPI.Migrations
             //Para eliminar las tablas si ya existen y que tomen los cambios en diseño
             //Down(migrationBuilder);
 
-            migrationBuilder.CreateTable(
-                name: "Classes",
+            /*migrationBuilder.CreateTable(
+                name: "classes",
                 columns: table => new
                 {
                     rowid = table.Column<int>(type: "int", nullable: false)
@@ -30,11 +30,11 @@ namespace ResourcesAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classes", x => x.rowid);
-                });
+                    table.PrimaryKey("PK_classes", x => x.rowid);
+                });*/
 
             migrationBuilder.CreateTable(
-                name: "Files",
+                name: "files",
                 columns: table => new
                 {
                     rowid = table.Column<int>(type: "int", nullable: false)
@@ -50,18 +50,18 @@ namespace ResourcesAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Files", x => x.rowid);
+                    table.PrimaryKey("PK_files", x => x.rowid);
                 });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Classes");
+            /*migrationBuilder.DropTable(
+                name: "classes");*/
 
             migrationBuilder.DropTable(
-                name: "Files");
+                name: "files");
         }
     }
 }

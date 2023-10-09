@@ -1,2 +1,4 @@
-/public/*
-/bin/*
+public/*
+bin/*
+.vs/*
+obj/*

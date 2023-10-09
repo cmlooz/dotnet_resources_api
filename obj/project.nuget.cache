@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Df9Uin+8/uCWdtT5TufRFBoF//eeD12vgzyBEuERRvPuGlnP2gQHXF8+rqyPJQvyfvZc7uRHNao8ZSh4PY9TWg==",
+  "dgSpecHash": "6umpa+mFwKFJkmbfe07uXu+SnOtb9Qu7ZL/wXeSLeqCx9HLQfMK4jQgX3DzFXqTDSfK83B8J1FkO4rmg14YANA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jcos1\\Documents\\Universidad\\2do Sem 2023\\Desarrollo de software III\\Proyecto Final\\ResourcesAPI\\ResourcesAPI.csproj",
+  "projectFilePath": "C:\\Users\\jcos1\\Documents\\Universidad\\2do Sem 2023\\Desarrollo de software III\\Proyecto Final\\dotnet_resources_api\\dotnet_resources_api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jcos1\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\jcos1\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

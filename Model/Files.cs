@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
-namespace ResourcesAPI.Models
+namespace dotnet_resources_api.Models
 {
-    public partial class Files
+    public partial class files
     {
         [Key]
         public int rowid { get; set; }
