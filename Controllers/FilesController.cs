@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using dotnet_resources_api.Models;
 using dotnet_resources_api.Wrappers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dotnet_resources_api.Controllers
 {
@@ -35,6 +36,7 @@ namespace dotnet_resources_api.Controllers
 
         }
 
+        [Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpGet("GetAllFiles")]
         public async Task<ResourcesResponse<dynamic>> GetAllFiles()
         {
@@ -43,6 +45,7 @@ namespace dotnet_resources_api.Controllers
             return new ResourcesResponse<dynamic>(result);
         }
 
+        [Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpGet("GetFile/{rowid}")]
         public async Task<ResourcesResponse<dynamic>> GetFile(int rowid)
         {
@@ -56,6 +59,7 @@ namespace dotnet_resources_api.Controllers
             return new ResourcesResponse<dynamic>(file);
         }
 
+        [Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpGet("GetFilesByClass/{class_id}")]
         public async Task<ResourcesResponse<dynamic>> GetFilesByClass(int class_id)
         {
@@ -72,6 +76,7 @@ namespace dotnet_resources_api.Controllers
             return new ResourcesResponse<dynamic>(files.Select(x => new { x.filename, x.filedata }));
         }
 
+        [Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpPost("PostFile")]
         public async Task<ResourcesResponse<dynamic>> PostFile([FromBody] ResourcesRequest request)
         {
@@ -116,6 +121,7 @@ namespace dotnet_resources_api.Controllers
             return new ResourcesResponse<dynamic>(null, "File created");
         }
 
+        [Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpPut("PutFile/{rowid}")]
         public async Task<ResourcesResponse<dynamic>> PutFile(int rowid, [FromBody] ResourcesRequest request)
         {
@@ -152,6 +158,7 @@ namespace dotnet_resources_api.Controllers
             return new ResourcesResponse<dynamic>(null, "File updated");
         }
 
+        [Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpDelete("DeleteFile/{id}")]
         public async Task<ResourcesResponse<dynamic>> DeleteFile(int rowid)
         {

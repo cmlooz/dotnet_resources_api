@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
 using dotnet_resources_api.Models;
+using dotnet_resources_api;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<resources_context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", options => { });
+
 
 var app = builder.Build();
 
@@ -32,6 +37,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseAuthorization();
+
 
 app.MapControllers();
 
