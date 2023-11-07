@@ -76,22 +76,22 @@ namespace dotnet_resources_api.Controllers
             return new ResourcesResponse<dynamic>(files.Select(x => new { x.filename, x.filedata }));
         }
 
+        /*
+        Body Request Example
+
+        {
+        "process": "Files",
+        "action": "PostFile",
+        "data": "{\"filename\": \"_filename\",\"filedata\": \"base64/url",\"class_id\": 0,\"class_order\": 0,\"userid\": \"_userid\"}",
+        "parameters": "{}",
+        "userid":"_userid"
+        }
+
+        */
         [Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpPost("PostFile")]
         public async Task<ResourcesResponse<dynamic>> PostFile([FromBody] ResourcesRequest request)
         {
-            /*
-            Request Example
-
-            {
-            "process": "Files",
-            "action": "PostFile",
-            "data": "{\"rowid\": 0,\"filename\": \"filename\",\"filedata\": \"base64/url",\"class_id\": 0,\"class_order\": 0,\"userid\": \"jco\"}",
-            "parameters": "{}"
-            }
-
-            */
-
             dynamic data = JsonConvert.DeserializeObject(request.data);
 
             string filename = data["filename"];
@@ -121,6 +121,18 @@ namespace dotnet_resources_api.Controllers
             return new ResourcesResponse<dynamic>(null, "File created");
         }
 
+        /*
+        Body Request Example
+
+        {
+        "process": "Files",
+        "action": "PutFile",
+        "data": "{\"filename\": \"_filename\",\"filedata\": \"base64/url",\"class_id\": 0,\"class_order\": 0,\"userid\": \"_userid\"}",
+        "parameters": "{\"id\":_id}",
+        "userid":"_userid"
+        }
+
+        */
         [Authorize(AuthenticationSchemes = "BasicAuthentication")]
         [HttpPut("PutFile/{rowid}")]
         public async Task<ResourcesResponse<dynamic>> PutFile(int rowid, [FromBody] ResourcesRequest request)

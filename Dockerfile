@@ -2,8 +2,7 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
-#EXPOSE 443
+EXPOSE 8080
 
 #For Database Connection
 EXPOSE 1433
@@ -22,4 +21,4 @@ RUN dotnet publish "dotnet_resources_api.csproj" -c Release -o /app/publish /p:U
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "dotnet_resources_api.dll", "-p", "80"]
+ENTRYPOINT ["dotnet", "dotnet_resources_api.dll", "-p", "8080"]

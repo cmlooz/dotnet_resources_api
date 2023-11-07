@@ -22,7 +22,7 @@ namespace dotnet_resources_api
         // A hard-coded list of users for demo purposes
         private readonly List<User> _users = new List<User>
         {
-            new User { username = "admin", password = "RmlsZXM=" },
+            new User { username = "admin", password = "dotnet_resources_api" },
         };
 
         public BasicAuthenticationHandler(

@@ -1,17 +1,19 @@
 version: '0.0.1'
 services:
-  ms-sql-server: 
-    #image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+  ms-sql-server-service: 
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
     environment:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "HDLCrin8*"
       MSSQL_PID: Express
     ports:
       - "1433:1433"
-  resources-api:
+  dotnet-resources-api-service:
     image: jcortizs/dotnet_resources_api
     build: .
     environment:
-      DBServer: "ms-sql-server"
+      #DBServer: "ms-sql-server"
+      DBServer: "localhost"
+      ConnectionStrings__DefaultConnection: "Server=tcp:localhost,1433;Database=resources_db;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;User ID=sa;Password=HDLCrin8*;"
     ports:
       - "8080:80"

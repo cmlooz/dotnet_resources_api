@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ms-sql-server
+  name: ms-sql-server-service
 spec:
   selector:
     app: ms-sql-server
@@ -14,7 +14,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-sql-server
+  name: ms-sql-server-deployment
 spec:
   selector:
     matchLabels:
@@ -25,7 +25,7 @@ spec:
         app: ms-sql-server
     spec:
       containers:
-        - name: ms-sql-server
+        - name: ms-sql-server-container
           image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
           env:
             - name: ACCEPT_EULA
@@ -40,20 +40,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: dotnet-resources-api
+  name: dotnet-resources-api-service
 spec:
   selector:
     app: dotnet-resources-api
   ports:
     - protocol: TCP
       port: 8080
-      targetPort: 80
+      targetPort: 8080
   type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dotnet-resources-api
+  name: dotnet-resources-api-deployment
 spec:
   selector:
     matchLabels:
@@ -64,10 +64,14 @@ spec:
         app: dotnet-resources-api
     spec:
       containers:
-        - name: dotnet-resources-api
+        - name: dotnet-resources-api-container
           image: jcortizs/dotnet_resources_api
           env:
             - name: ms-sql-server
-              value: "ms-sql-server"
+              #value: "ms-sql-server"
+              value: "localhost"
+            - name: ConnectionStrings__DefaultConnection
+              value: "Server=tcp:localhost,1433;Database=resources_db;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;User ID=sa;Password=HDLCrin8*;"
           ports:
-            - containerPort: 80
+            - containerPort: 8080
+            - containerPort: 1433
