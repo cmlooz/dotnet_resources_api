@@ -1,28 +1,27 @@
 apiVersion: v1
-kind: Service
+kind: PersistentVolumeClaim
 metadata:
-  name: ms-sql-server-service
+  name: ms-sql-server-pvc
 spec:
-  selector:
-    app: ms-sql-server
-  ports:
-    - protocol: TCP
-      port: 1433
-      targetPort: 1433
-  type: LoadBalancer
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ms-sql-server-deployment
+  name: dotnet-resources-api-deployment
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: ms-sql-server
+      app: dotnet-resources-api
   template:
     metadata:
       labels:
-        app: ms-sql-server
+        app: dotnet-resources-api
     spec:
       containers:
         - name: ms-sql-server-container
@@ -36,6 +35,21 @@ spec:
               value: Express
           ports:
             - containerPort: 1433
+        - name: dotnet-resources-api-container
+          image: jcortizs/dotnet_resources_api
+          env:
+            - name: DBServer
+              value: localhost
+            #- name: ms-sql-server
+            #  value: "ms-sql-server-service"
+            - name: ConnectionStrings__DefaultConnection
+              value: "Server=tcp:localhost,1433;Database=resources_db;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;User ID=sa;Password=HDLCrin8*;"
+          ports:
+            - containerPort: 80
+      volumes:
+        - name: ms-sql-server-pvolume
+          persistentVolumeClaim:
+            claimName: ms-sql-server-pvc
 ---
 apiVersion: v1
 kind: Service
@@ -45,33 +59,8 @@ spec:
   selector:
     app: dotnet-resources-api
   ports:
-    - protocol: TCP
+    - name: http
+      protocol: TCP
       port: 8080
-      targetPort: 8080
+      targetPort: 80
   type: LoadBalancer
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: dotnet-resources-api-deployment
-spec:
-  selector:
-    matchLabels:
-      app: dotnet-resources-api
-  template:
-    metadata:
-      labels:
-        app: dotnet-resources-api
-    spec:
-      containers:
-        - name: dotnet-resources-api-container
-          image: jcortizs/dotnet_resources_api
-          env:
-            - name: ms-sql-server
-              #value: "ms-sql-server"
-              value: "localhost"
-            - name: ConnectionStrings__DefaultConnection
-              value: "Server=tcp:localhost,1433;Database=resources_db;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;User ID=sa;Password=HDLCrin8*;"
-          ports:
-            - containerPort: 8080
-            - containerPort: 1433

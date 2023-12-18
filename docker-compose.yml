@@ -12,8 +12,8 @@ services:
     image: jcortizs/dotnet_resources_api
     build: .
     environment:
-      #DBServer: "ms-sql-server"
-      DBServer: "localhost"
-      ConnectionStrings__DefaultConnection: "Server=tcp:localhost,1433;Database=resources_db;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;User ID=sa;Password=HDLCrin8*;"
+      DBServer: "ms-sql-server-service,1433"
+      #DBServer: "localhost,1433"
+      ConnectionStrings__DefaultConnection: "Server=tcp:ms-sql-server-service,1433;Database=resources_db;Trusted_Connection=False;TrustServerCertificate=True;MultipleActiveResultSets=true;User ID=sa;Password=HDLCrin8*;"
     ports:
-      - "8080:80"
+      - "8080:8080"
